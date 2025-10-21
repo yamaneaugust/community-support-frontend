@@ -404,13 +404,14 @@ export default function CommunitySupportHub() {
     if (activeTab === 'chatbot' && messages.length === 0) {
       setMessages([{
         type: 'bot',
-        text: "Hello! I'm here to help connect you with local support services. Can you tell me what kind of help you're looking for?",
+        text: "Hello! I'm your support resource assistant. I can help you find verified organizations in your area.\n\nI understand ZIP codes, city names, and state names to find resources near you.\n\nWhat kind of help are you looking for today?",
         options: [
           "Trauma therapy",
           "Housing assistance",
           "Legal help",
           "Violence prevention programs",
-          "Youth services"
+          "Youth services",
+          "Victim support"
         ]
       }]);
     }
@@ -420,39 +421,230 @@ export default function CommunitySupportHub() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  // Zip code to state/city mapping (major cities)
+  const getLocationFromZip = (zip) => {
+    const zipMappings = {
+      '100': 'New York, NY', '101': 'New York, NY', '102': 'New York, NY',
+      '103': 'Staten Island, NY', '104': 'Bronx, NY', '105': 'Westchester, NY',
+      '110': 'Queens, NY', '111': 'Queens, NY', '112': 'Brooklyn, NY', '113': 'Flushing, NY',
+      '114': 'Queens, NY', '115': 'Queens, NY', '116': 'Queens, NY',
+      '117': 'Brooklyn, NY', '118': 'Brooklyn, NY', '119': 'Brooklyn, NY',
+      '200': 'Washington, DC', '201': 'Virginia', '202': 'Washington, DC',
+      '210': 'Maryland', '211': 'Maryland', '212': 'Maryland',
+      '300': 'Philadelphia, PA', '301': 'Philadelphia, PA', '302': 'Delaware',
+      '310': 'New Jersey', '320': 'Pittsburgh, PA', '330': 'Ohio',
+      '400': 'Kentucky', '500': 'Iowa', '600': 'Chicago, IL', '601': 'Chicago, IL',
+      '606': 'Chicago, IL', '607': 'Chicago, IL', '608': 'Illinois',
+      '700': 'Louisiana', '701': 'Louisiana', '800': 'Colorado', '801': 'Utah',
+      '900': 'California', '901': 'Los Angeles, CA', '902': 'Los Angeles, CA',
+      '910': 'California', '920': 'San Diego, CA', '930': 'California',
+      '940': 'San Francisco, CA', '941': 'San Francisco, CA', '945': 'Oakland, CA',
+      '980': 'Seattle, WA', '981': 'Seattle, WA'
+    };
+
+    const prefix = zip.substring(0, 3);
+    return zipMappings[prefix] || null;
+  };
+
   const handleChatOption = (option) => {
     setMessages(prev => [...prev, { type: 'user', text: option }]);
+
+    // Handle special commands
+    if (option === "Start over") {
+      setChatContext({ step: 'initial' });
+      setTimeout(() => {
+        setMessages(prev => [...prev, {
+          type: 'bot',
+          text: "No problem! Let's start fresh. What kind of help are you looking for?",
+          options: [
+            "Trauma therapy",
+            "Housing assistance",
+            "Legal help",
+            "Violence prevention programs",
+            "Youth services",
+            "Victim support"
+          ]
+        }]);
+      }, 500);
+      return;
+    }
+
+    if (option === "Show more resources") {
+      setTimeout(() => {
+        setMessages(prev => [...prev, {
+          type: 'bot',
+          text: "You can view all resources by clicking on the 'Find Resources' tab above, or I can help you search for something specific. What would you like to do?",
+          options: ["Find Resources", "Search for specific help", "Start over"]
+        }]);
+      }, 500);
+      return;
+    }
+
+    if (option === "Submit help request") {
+      setTimeout(() => {
+        setMessages(prev => [...prev, {
+          type: 'bot',
+          text: "I can help you submit an anonymous support request. Please click the 'Request Support' tab above to fill out a confidential form. Would you like anything else?",
+          options: ["Find more resources", "Start over"]
+        }]);
+      }, 500);
+      return;
+    }
+
+    if (option === "Try different location" || option === "Search different area") {
+      setChatContext({ step: 'location', selectedService: chatContext.selectedService });
+      setTimeout(() => {
+        setMessages(prev => [...prev, {
+          type: 'bot',
+          text: "Sure! Please provide a new location:\n\n• ZIP code (e.g., 10001)\n• City and state (e.g., Brooklyn, NY)\n• Or just your state"
+        }]);
+      }, 500);
+      return;
+    }
+
+    if (option === "Different type of help") {
+      setChatContext({ step: 'initial' });
+      setTimeout(() => {
+        setMessages(prev => [...prev, {
+          type: 'bot',
+          text: "What kind of help are you looking for?",
+          options: [
+            "Trauma therapy",
+            "Housing assistance",
+            "Legal help",
+            "Violence prevention programs",
+            "Youth services",
+            "Victim support"
+          ]
+        }]);
+      }, 500);
+      return;
+    }
+
+    if (option === "Yes, show nationwide resources") {
+      const nationwide = resources.filter(r =>
+        r.location.toLowerCase().includes('nationwide')
+      ).slice(0, 5);
+
+      setTimeout(() => {
+        let response = "Here are nationwide resources available 24/7 from anywhere:\n\n";
+        nationwide.forEach((r, idx) => {
+          response += `${idx + 1}. ${r.name}\n   📞 ${r.phone}\n`;
+          if (r.website) response += `   🌐 ${r.website}\n`;
+          response += `   ${r.description}\n\n`;
+        });
+
+        setMessages(prev => [...prev, {
+          type: 'bot',
+          text: response,
+          options: ["Show more resources", "Start over", "Submit help request"]
+        }]);
+      }, 500);
+      return;
+    }
+
+    // Handle service selection
     setChatContext({ step: 'location', selectedService: option });
-    
+
     setTimeout(() => {
       setMessages(prev => [...prev, {
         type: 'bot',
-        text: "Great! What's your location or zip code? This helps me find resources near you."
+        text: "Great! To find resources near you, please provide your:\n\n• ZIP code (e.g., 10001)\n• City and state (e.g., Brooklyn, NY)\n• Or just your state\n\nWhat's your location?"
       }]);
     }, 500);
   };
 
   const sendChatMessage = () => {
     if (!chatInput.trim()) return;
-    
+
     const userMessage = chatInput.trim();
     setMessages(prev => [...prev, { type: 'user', text: userMessage }]);
     setChatInput('');
-    
+
     setTimeout(() => {
       if (chatContext.step === 'location') {
-        const matched = resources.filter(r =>
-          r.location.toLowerCase().includes(userMessage.toLowerCase()) ||
-          userMessage.toLowerCase().includes(r.location.toLowerCase().split(',')[0])
-        ).slice(0, 3);
-        
+        // Check if it's a zip code (5 digits)
+        const zipMatch = userMessage.match(/\b\d{5}\b/);
+        let locationQuery = userMessage;
+        let detectedLocation = null;
+
+        if (zipMatch) {
+          detectedLocation = getLocationFromZip(zipMatch[0]);
+          if (detectedLocation) {
+            locationQuery = detectedLocation;
+            setMessages(prev => [...prev, {
+              type: 'bot',
+              text: `I detected ZIP code ${zipMatch[0]} - that's in ${detectedLocation}. Searching for resources...`
+            }]);
+          }
+        }
+
+        // Search for matching resources
+        let matched = resources.filter(r => {
+          const location = r.location.toLowerCase();
+          const query = locationQuery.toLowerCase();
+
+          // Exact location match or state match
+          if (location.includes(query) || query.includes(location.split(',')[0].toLowerCase())) {
+            return true;
+          }
+
+          // Check for state abbreviations
+          const stateAbbrev = query.match(/\b[A-Z]{2}\b/);
+          if (stateAbbrev && location.includes(stateAbbrev[0].toLowerCase())) {
+            return true;
+          }
+
+          return false;
+        });
+
+        // If no local matches, show nationwide resources
+        if (matched.length === 0) {
+          matched = resources.filter(r =>
+            r.location.toLowerCase().includes('nationwide') ||
+            r.location.toLowerCase().includes('multiple states')
+          );
+        }
+
+        // Filter by selected service if available
+        if (chatContext.selectedService && matched.length > 0) {
+          const serviceMap = {
+            "Trauma therapy": ["trauma", "victims"],
+            "Housing assistance": ["housing"],
+            "Legal help": ["legal"],
+            "Violence prevention programs": ["violence-prevention"],
+            "Youth services": ["youth"],
+            "Victim support": ["victims"]
+          };
+
+          const serviceTypes = serviceMap[chatContext.selectedService] || [];
+          const filtered = matched.filter(r =>
+            r.type && r.type.some(t => serviceTypes.includes(t))
+          );
+
+          if (filtered.length > 0) {
+            matched = filtered;
+          }
+        }
+
         if (matched.length > 0) {
-          let response = "I found these verified organizations in your area:\n\n";
-          matched.forEach(r => {
-            response += `📍 ${r.name}\n${r.description}\n📞 ${r.phone}\n\n`;
+          const topMatches = matched.slice(0, 5);
+          let response = detectedLocation
+            ? `Here are ${topMatches.length} verified organizations that can help:\n\n`
+            : `I found ${topMatches.length} verified organizations for you:\n\n`;
+
+          topMatches.forEach((r, idx) => {
+            response += `${idx + 1}. ${r.name}\n`;
+            response += `   📍 ${r.location}\n`;
+            response += `   📞 ${r.phone}\n`;
+            if (r.website) {
+              response += `   🌐 ${r.website}\n`;
+            }
+            response += `   ${r.description}\n\n`;
           });
-          response += "Would you like more information?";
-          
+
+          response += "What would you like to do next?";
+
           setMessages(prev => [...prev, {
             type: 'bot',
             text: response,
@@ -461,16 +653,56 @@ export default function CommunitySupportHub() {
         } else {
           setMessages(prev => [...prev, {
             type: 'bot',
-            text: "I couldn't find resources in that area. Could you provide your city or state?",
-            options: ["New York", "California", "Illinois", "Pennsylvania"]
+            text: `I couldn't find local resources for "${userMessage}", but I can show you nationwide resources that serve all areas. These organizations provide phone and online support:\n\nWould you like to see nationwide resources?`,
+            options: ["Yes, show nationwide resources", "Try different location", "Start over"]
           }]);
         }
-        setChatContext({ step: 'results' });
+
+        setChatContext({ step: 'results', lastLocation: locationQuery });
+      } else if (chatContext.step === 'results') {
+        // Handle follow-up questions
+        const lowerMessage = userMessage.toLowerCase();
+
+        if (lowerMessage.includes('more') || lowerMessage.includes('other')) {
+          setMessages(prev => [...prev, {
+            type: 'bot',
+            text: "You can browse all available resources by clicking the 'Find Resources' tab above. Would you like help with anything else?",
+            options: ["Search different area", "Different type of help", "Start over"]
+          }]);
+        } else if (lowerMessage.includes('yes') || lowerMessage.includes('nationwide')) {
+          const nationwide = resources.filter(r =>
+            r.location.toLowerCase().includes('nationwide')
+          ).slice(0, 5);
+
+          let response = "Here are nationwide resources available 24/7:\n\n";
+          nationwide.forEach((r, idx) => {
+            response += `${idx + 1}. ${r.name}\n   📞 ${r.phone}\n   ${r.description}\n\n`;
+          });
+
+          setMessages(prev => [...prev, {
+            type: 'bot',
+            text: response,
+            options: ["Show more resources", "Start over"]
+          }]);
+        } else {
+          setMessages(prev => [...prev, {
+            type: 'bot',
+            text: "I'm here to help! You can:\n• Search for resources in a different area\n• Look for a different type of support\n• Submit an anonymous help request\n\nWhat would you like to do?",
+            options: ["Search different area", "Different type of help", "Submit help request", "Start over"]
+          }]);
+        }
       } else {
         setMessages(prev => [...prev, {
           type: 'bot',
-          text: "I'm here to help. Could you tell me more about what you need?",
-          options: ["Find resources", "Emergency help", "Talk to someone"]
+          text: "I'm here to help you find support services. What kind of help do you need?",
+          options: [
+            "Trauma therapy",
+            "Housing assistance",
+            "Legal help",
+            "Violence prevention programs",
+            "Youth services",
+            "Victim support"
+          ]
         }]);
       }
     }, 800);
