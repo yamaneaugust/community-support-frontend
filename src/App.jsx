@@ -448,7 +448,7 @@ export default function CommunitySupportHub() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.supportType || !formData.location) {
       alert('Please fill in required fields');
       return;
@@ -456,18 +456,26 @@ export default function CommunitySupportHub() {
 
     try {
       setFormLoading(true);
-      
-      const response = await fetch(`${API_URL}/requests`, {
+
+      // Send to FormSubmit.co for email delivery
+      const formPayload = new FormData();
+      formPayload.append('_subject', `New Support Request - ${formData.supportType}`);
+      formPayload.append('_cc', 'yamaneaugust@gmail.com');
+      formPayload.append('_template', 'box'); // Nice email template
+      formPayload.append('_captcha', 'false'); // Disable captcha for better UX
+      formPayload.append('Support Type', formData.supportType);
+      formPayload.append('Location', formData.location);
+      formPayload.append('Situation', formData.situation || 'Not provided');
+      formPayload.append('Urgency', formData.urgency);
+      formPayload.append('Contact', formData.contact || 'Anonymous (no contact info provided)');
+      formPayload.append('Submitted At', new Date().toLocaleString());
+
+      const response = await fetch('https://formsubmit.co/yamaneaugust@gmail.com', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        body: formPayload,
       });
-      
-      const data = await response.json();
-      
-      if (data.success) {
+
+      if (response.ok) {
         setFormSubmitted(true);
         setFormData({
           supportType: '',
