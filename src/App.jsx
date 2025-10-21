@@ -303,9 +303,9 @@ export default function CommunitySupportHub() {
   const [activeTab, setActiveTab] = useState('resources');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('all');
-  const [resources, setResources] = useState([]);
-  const [filteredResources, setFilteredResources] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [resources, setResources] = useState(INITIAL_RESOURCES);
+  const [filteredResources, setFilteredResources] = useState(INITIAL_RESOURCES);
+  const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [chatInput, setChatInput] = useState('');
   const [chatContext, setChatContext] = useState({ step: 'initial' });
@@ -326,15 +326,22 @@ export default function CommunitySupportHub() {
         setLoading(true);
         const response = await fetch(`${API_URL}/resources`);
         const data = await response.json();
-        
-        if (data.success) {
-          setResources(data.data);
-          setFilteredResources(data.data);
+
+        if (data.success && data.data.length > 0) {
+          // Merge backend resources with initial resources, avoiding duplicates
+          const mergedResources = [...INITIAL_RESOURCES];
+          data.data.forEach(backendResource => {
+            const exists = INITIAL_RESOURCES.some(r => r.name === backendResource.name);
+            if (!exists) {
+              mergedResources.push(backendResource);
+            }
+          });
+          setResources(mergedResources);
+          setFilteredResources(mergedResources);
         }
       } catch (error) {
         console.error('Error fetching resources:', error);
-        setResources(INITIAL_RESOURCES);
-        setFilteredResources(INITIAL_RESOURCES);
+        // Already using INITIAL_RESOURCES, so no need to set again
       } finally {
         setLoading(false);
       }
