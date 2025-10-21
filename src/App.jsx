@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, MessageCircle, Shield, MapPin, Phone, CheckCircle, Send, AlertCircle } from 'lucide-react';
+import { Search, MessageCircle, Shield, MapPin, Phone, CheckCircle, Send, AlertCircle, ExternalLink } from 'lucide-react';
 
 const API_URL = 'https://community-support-backend.onrender.com/api';
 
@@ -12,6 +12,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Free mental health support, education, and advocacy. Specialized trauma programs for violence survivors and families.",
     phone: "1-800-950-NAMI (6264)",
+    website: "https://www.nami.org",
     verified: true
   },
   {
@@ -21,6 +22,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Free, confidential, 24/7 treatment referral and information service for mental health and substance abuse.",
     phone: "1-800-662-4357",
+    website: "https://www.samhsa.gov/find-help/national-helpline",
     verified: true
   },
   {
@@ -30,6 +32,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Free 24/7 crisis counseling via text message. Trained counselors provide support for trauma, violence, and mental health crises.",
     phone: "Text HOME to 741741",
+    website: "https://www.crisistextline.org",
     verified: true
   },
   {
@@ -39,6 +42,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Specialized trauma therapy and support groups for survivors of violence, including gun violence and community trauma.",
     phone: "1-844-887-2862",
+    website: "https://traumarecoverynetwork.org",
     verified: true
   },
   {
@@ -48,6 +52,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Online trauma-informed mental health resources and therapy referrals for violence survivors.",
     phone: "1-877-727-4343",
+    website: "https://www.psychhub.com",
     verified: true
   },
 
@@ -59,6 +64,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Comprehensive support for crime victims including advocacy, counseling referrals, and rights information.",
     phone: "1-855-4-VICTIM (1-855-484-2846)",
+    website: "https://victimsofcrime.org",
     verified: true
   },
   {
@@ -68,6 +74,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Federal resource center providing victim compensation, crisis response, and support services nationwide.",
     phone: "1-800-851-3420",
+    website: "https://ovc.ojp.gov",
     verified: true
   },
   {
@@ -77,6 +84,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "24/7 crisis intervention, victim advocacy, and referrals to local support services.",
     phone: "1-800-879-6682",
+    website: "https://www.trynova.org",
     verified: true
   },
   {
@@ -86,6 +94,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Support network for families who have lost loved ones to gun violence. Grief counseling and advocacy.",
     phone: "1-888-NO-VIOLENCE",
+    website: "https://www.mothersagainstviolence.org",
     verified: true
   },
 
@@ -97,6 +106,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Emergency shelter referrals, safety planning, and housing assistance for those fleeing violence.",
     phone: "1-800-799-7233",
+    website: "https://www.thehotline.org",
     verified: true
   },
   {
@@ -106,6 +116,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Free housing counseling services including emergency housing, transitional housing, and rental assistance.",
     phone: "1-800-569-4287",
+    website: "https://www.hud.gov/findacounselor",
     verified: true
   },
   {
@@ -115,6 +126,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Emergency shelter placement, transitional housing programs, and permanent housing solutions.",
     phone: "1-202-638-1526",
+    website: "https://endhomelessness.org",
     verified: true
   },
   {
@@ -124,6 +136,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Emergency housing, temporary shelter, and transitional housing programs for violence survivors.",
     phone: "1-800-SAL-ARMY (1-800-725-2769)",
+    website: "https://www.salvationarmyusa.org",
     verified: true
   },
 
@@ -135,6 +148,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Free civil legal assistance nationwide. Helps connect low-income individuals with local legal aid providers.",
     phone: "1-202-295-1500",
+    website: "https://www.lsc.gov",
     verified: true
   },
   {
@@ -144,6 +158,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Free legal assistance for crime victims including protective orders, victim compensation, and rights advocacy.",
     phone: "1-800-285-2221",
+    website: "https://www.americanbar.org/groups/probono_public_service",
     verified: true
   },
   {
@@ -153,6 +168,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Legal advocacy and representation for crime victims' rights in court proceedings.",
     phone: "1-503-768-6819",
+    website: "https://law.lclark.edu/centers/national_crime_victim_law_institute",
     verified: true
   },
   {
@@ -162,6 +178,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Free legal services for crime victims including court advocacy and civil legal representation.",
     phone: "1-866-372-1001",
+    website: "https://www.victimrights.org",
     verified: true
   },
 
@@ -173,6 +190,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Community violence intervention programs, conflict mediation, and prevention education.",
     phone: "1-877-STOP-GUN",
+    website: "https://www.nivp.org",
     verified: true
   },
   {
@@ -182,6 +200,7 @@ const INITIAL_RESOURCES = [
     location: "Multiple States",
     description: "Evidence-based violence interruption programs treating violence as a public health issue.",
     phone: "1-312-996-8775",
+    website: "https://cvg.org",
     verified: true
   },
   {
@@ -191,6 +210,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Community-led violence prevention, street outreach, and conflict resolution services.",
     phone: "1-866-968-7233",
+    website: "https://www.communitiesovercomingviolence.org",
     verified: true
   },
   {
@@ -200,6 +220,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Proven violence reduction strategies and community intervention programs.",
     phone: "1-212-237-8456",
+    website: "https://nnscommunities.org",
     verified: true
   },
 
@@ -211,6 +232,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "24/7 crisis intervention and suicide prevention for LGBTQ+ youth affected by violence or trauma.",
     phone: "1-866-488-7386",
+    website: "https://www.thetrevorproject.org",
     verified: true
   },
   {
@@ -220,6 +242,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Safe spaces, mentorship, and support programs for youth in high-risk communities.",
     phone: "1-800-854-2582",
+    website: "https://www.bgca.org",
     verified: true
   },
   {
@@ -229,6 +252,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "24/7 crisis support, shelter referrals, and safety planning for youth fleeing violence.",
     phone: "1-800-786-2929",
+    website: "https://www.1800runaway.org",
     verified: true
   },
   {
@@ -238,6 +262,7 @@ const INITIAL_RESOURCES = [
     location: "Nationwide",
     description: "Education, job training, and counseling programs for young people in underserved communities.",
     phone: "1-617-623-9900",
+    website: "https://www.youthbuild.org",
     verified: true
   },
   {
@@ -247,6 +272,7 @@ const INITIAL_RESOURCES = [
     location: "Multiple States",
     description: "Mental health services, crisis intervention, and family support for at-risk youth.",
     phone: "1-800-288-9968",
+    website: "https://www.youthvillages.org",
     verified: true
   },
 
@@ -258,6 +284,7 @@ const INITIAL_RESOURCES = [
     location: "New York State",
     description: "Street outreach program providing conflict mediation and violence interruption services.",
     phone: "(518) 474-2121",
+    website: "https://www.criminaljustice.ny.gov/crimnet/ojsa/initiatives/snug.htm",
     verified: true
   },
   {
@@ -267,6 +294,7 @@ const INITIAL_RESOURCES = [
     location: "Brooklyn, NY",
     description: "Free trauma-focused therapy for gun violence survivors and family members.",
     phone: "(718) 834-7341",
+    website: "https://www.traumarecoverycenter.org",
     verified: true
   },
   {
@@ -276,6 +304,7 @@ const INITIAL_RESOURCES = [
     location: "Queens, NY",
     description: "Emergency and transitional housing for those displaced by community violence.",
     phone: "(718) 291-4000",
+    website: "https://www.safehavenhousing.org",
     verified: true
   },
   {
@@ -285,6 +314,7 @@ const INITIAL_RESOURCES = [
     location: "Chicago, IL",
     description: "Violence reduction through employment, education, and mentorship for high-risk youth.",
     phone: "(312) 374-9378",
+    website: "https://www.chicago-cred.org",
     verified: true
   }
 ];
@@ -586,10 +616,21 @@ export default function CommunitySupportHub() {
                           <MapPin size={16} />
                           <span className="text-sm">{resource.location}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-gray-900 font-semibold mb-3">
+                        <div className="flex items-center gap-2 text-gray-900 font-semibold mb-2">
                           <Phone size={16} />
                           <span className="text-sm">{resource.phone}</span>
                         </div>
+                        {resource.website && (
+                          <a
+                            href={resource.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-amber-700 hover:text-amber-900 font-semibold mb-3 transition-colors"
+                          >
+                            <ExternalLink size={16} />
+                            <span className="text-sm underline">Visit Website</span>
+                          </a>
+                        )}
                         <div className="flex flex-wrap gap-2">
                           {resource.type && resource.type.map(t => (
                             <span key={t} className="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-semibold">
