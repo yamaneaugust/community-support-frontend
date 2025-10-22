@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, MessageCircle, Shield, MapPin, Phone, CheckCircle, Send, AlertCircle, ExternalLink, BookOpen, AlertTriangle, Eye, Run, Lock, Users, ArrowRight, Heart } from 'lucide-react';
+import { Search, MessageCircle, Shield, MapPin, Phone, CheckCircle, Send, AlertCircle, ExternalLink, BookOpen, AlertTriangle, Eye, Run, Lock, ArrowRight, Heart } from 'lucide-react';
 
 const API_URL = 'https://community-support-backend.onrender.com/api';
 
