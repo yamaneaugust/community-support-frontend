@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, MessageCircle, Shield, MapPin, Phone, CheckCircle, Send, AlertCircle, ExternalLink } from 'lucide-react';
+import { Search, MessageCircle, Shield, MapPin, Phone, CheckCircle, Send, AlertCircle, ExternalLink, BookOpen, AlertTriangle, Eye, Run, Lock, Users, ArrowRight, Heart } from 'lucide-react';
 
 const API_URL = 'https://community-support-backend.onrender.com/api';
 
@@ -808,6 +808,17 @@ export default function CommunitySupportHub() {
               <Shield size={20} />
               Request Support
             </button>
+            <button
+              onClick={() => setActiveTab('safety')}
+              className={`flex-1 min-w-[150px] px-6 py-4 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 ${
+                activeTab === 'safety'
+                  ? 'bg-amber-900 text-white shadow-lg'
+                  : 'bg-amber-100 text-amber-900 hover:bg-amber-200 hover:shadow-lg hover:-translate-y-0.5'
+              }`}
+            >
+              <BookOpen size={20} />
+              Safety Guide
+            </button>
           </div>
         </div>
 
@@ -1059,6 +1070,315 @@ export default function CommunitySupportHub() {
                   </button>
                 </div>
               )}
+            </div>
+          )}
+
+          {activeTab === 'safety' && (
+            <div>
+              <h2 className="text-3xl font-bold text-amber-900 mb-4 text-center">Gun Violence Safety Guide</h2>
+              <p className="text-center text-gray-700 mb-8 text-lg">
+                Evidence-based guidance on staying safe during and after gun violence incidents
+              </p>
+
+              {/* Emergency Alert */}
+              <div className="bg-red-500 text-white px-6 py-4 rounded-xl mb-8 text-center font-semibold shadow-lg">
+                <AlertTriangle size={24} className="inline mr-2" />
+                IN IMMEDIATE DANGER? CALL 911 NOW
+              </div>
+
+              {/* During Active Shooting Section */}
+              <div className="mb-10">
+                <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg mb-6">
+                  <h3 className="text-2xl font-bold text-red-900 mb-3 flex items-center gap-2">
+                    <AlertTriangle size={28} />
+                    During an Active Shooting: RUN. HIDE. FIGHT.
+                  </h3>
+                  <p className="text-gray-700 mb-4">
+                    <strong>Source:</strong> U.S. Department of Homeland Security & FBI Active Shooter Guidelines
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                  {/* RUN */}
+                  <div className="bg-amber-50 border-2 border-amber-300 rounded-xl p-6 hover:shadow-lg transition-all">
+                    <div className="bg-amber-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Run size={32} />
+                    </div>
+                    <h4 className="text-xl font-bold text-amber-900 mb-3 text-center">1. RUN</h4>
+                    <ul className="space-y-2 text-gray-700">
+                      <li className="flex items-start gap-2">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
+                        <span>Evacuate if there's an accessible escape path</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
+                        <span>Leave belongings behind</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
+                        <span>Help others escape if possible</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
+                        <span>Prevent others from entering the area</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
+                        <span>Call 911 when safe</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* HIDE */}
+                  <div className="bg-amber-50 border-2 border-amber-300 rounded-xl p-6 hover:shadow-lg transition-all">
+                    <div className="bg-amber-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Lock size={32} />
+                    </div>
+                    <h4 className="text-xl font-bold text-amber-900 mb-3 text-center">2. HIDE</h4>
+                    <ul className="space-y-2 text-gray-700">
+                      <li className="flex items-start gap-2">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
+                        <span>Find a hiding place if evacuation isn't possible</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
+                        <span>Lock and barricade doors</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
+                        <span>Silence your phone and stay quiet</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
+                        <span>Hide behind large objects</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
+                        <span>Turn off lights and remain silent</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* FIGHT */}
+                  <div className="bg-amber-50 border-2 border-amber-300 rounded-xl p-6 hover:shadow-lg transition-all">
+                    <div className="bg-amber-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Shield size={32} />
+                    </div>
+                    <h4 className="text-xl font-bold text-amber-900 mb-3 text-center">3. FIGHT</h4>
+                    <ul className="space-y-2 text-gray-700">
+                      <li className="flex items-start gap-2">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
+                        <span><strong>Last resort only</strong> when life is in danger</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
+                        <span>Act with physical aggression</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
+                        <span>Improvise weapons (chairs, fire extinguishers)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
+                        <span>Commit to your actions</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
+                        <span>Work together with others if possible</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* When Police Arrive Section */}
+              <div className="mb-10">
+                <div className="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg mb-6">
+                  <h3 className="text-2xl font-bold text-blue-900 mb-3 flex items-center gap-2">
+                    <Shield size={28} />
+                    When Law Enforcement Arrives
+                  </h3>
+                  <p className="text-gray-700">
+                    <strong>Source:</strong> FBI & Law Enforcement Active Shooter Response Protocols
+                  </p>
+                </div>
+
+                <div className="bg-white border-2 border-blue-200 rounded-xl p-6">
+                  <ul className="space-y-3 text-gray-700">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle size={20} className="mt-1 flex-shrink-0 text-blue-600" />
+                      <span><strong>Remain calm and follow instructions</strong> - Officers may be armed with rifles, shotguns, or handguns</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle size={20} className="mt-1 flex-shrink-0 text-blue-600" />
+                      <span><strong>Keep your hands visible at all times</strong> - Raise hands and spread fingers</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle size={20} className="mt-1 flex-shrink-0 text-blue-600" />
+                      <span><strong>Avoid making quick movements</strong> toward officers or pointing/screaming</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle size={20} className="mt-1 flex-shrink-0 text-blue-600" />
+                      <span><strong>Do not stop to ask for help</strong> - Officers' first priority is to stop the threat</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle size={20} className="mt-1 flex-shrink-0 text-blue-600" />
+                      <span><strong>Provide information</strong> - Location of shooter, number of shooters, description, weapons</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* After a Shooting Section */}
+              <div className="mb-10">
+                <div className="bg-purple-50 border-l-4 border-purple-500 p-6 rounded-lg mb-6">
+                  <h3 className="text-2xl font-bold text-purple-900 mb-3 flex items-center gap-2">
+                    <Heart size={28} />
+                    After a Shooting: Survivor Support
+                  </h3>
+                  <p className="text-gray-700">
+                    <strong>Source:</strong> National Center for PTSD & American Psychological Association
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-white border-2 border-purple-200 rounded-xl p-6">
+                    <h4 className="text-xl font-bold text-purple-900 mb-4">Immediate Steps</h4>
+                    <ul className="space-y-3 text-gray-700">
+                      <li className="flex items-start gap-3">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-purple-600" />
+                        <span><strong>Seek medical attention</strong> for any injuries, even minor ones</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-purple-600" />
+                        <span><strong>Contact loved ones</strong> to let them know you're safe</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-purple-600" />
+                        <span><strong>Cooperate with law enforcement</strong> investigations</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-purple-600" />
+                        <span><strong>Preserve evidence</strong> if safe (photos, clothing, witness info)</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-white border-2 border-purple-200 rounded-xl p-6">
+                    <h4 className="text-xl font-bold text-purple-900 mb-4">Mental Health Support</h4>
+                    <ul className="space-y-3 text-gray-700">
+                      <li className="flex items-start gap-3">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-purple-600" />
+                        <span><strong>Seek counseling</strong> - Trauma is normal after violence</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-purple-600" />
+                        <span><strong>Connect with support groups</strong> - You're not alone</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-purple-600" />
+                        <span><strong>Crisis Text Line:</strong> Text HOME to 741741</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-purple-600" />
+                        <span><strong>National Crisis Line:</strong> Call 988</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Warning Signs Section */}
+              <div className="mb-10">
+                <div className="bg-orange-50 border-l-4 border-orange-500 p-6 rounded-lg mb-6">
+                  <h3 className="text-2xl font-bold text-orange-900 mb-3 flex items-center gap-2">
+                    <Eye size={28} />
+                    Warning Signs: When to Report Concerns
+                  </h3>
+                  <p className="text-gray-700 mb-2">
+                    <strong>Source:</strong> FBI Behavioral Analysis Unit & Sandy Hook Promise
+                  </p>
+                  <p className="text-sm text-gray-600 italic">
+                    If you see something, say something. Many shootings have warning signs.
+                  </p>
+                </div>
+
+                <div className="bg-white border-2 border-orange-200 rounded-xl p-6">
+                  <p className="text-gray-700 mb-4 font-semibold">
+                    Report to authorities (call 911 or local law enforcement) if someone:
+                  </p>
+                  <ul className="space-y-3 text-gray-700">
+                    <li className="flex items-start gap-3">
+                      <AlertTriangle size={18} className="mt-1 flex-shrink-0 text-orange-600" />
+                      <span><strong>Makes direct threats</strong> of violence against specific people or places</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <AlertTriangle size={18} className="mt-1 flex-shrink-0 text-orange-600" />
+                      <span><strong>Shows fascination with violence</strong> or mass shootings</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <AlertTriangle size={18} className="mt-1 flex-shrink-0 text-orange-600" />
+                      <span><strong>Exhibits concerning behavior</strong> - sudden isolation, aggression, paranoia</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <AlertTriangle size={18} className="mt-1 flex-shrink-0 text-orange-600" />
+                      <span><strong>Posts threats or violent content</strong> on social media</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <AlertTriangle size={18} className="mt-1 flex-shrink-0 text-orange-600" />
+                      <span><strong>Has acquired weapons</strong> and talks about using them</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <AlertTriangle size={18} className="mt-1 flex-shrink-0 text-orange-600" />
+                      <span><strong>Expresses feelings of persecution</strong> or revenge fantasies</span>
+                    </li>
+                  </ul>
+
+                  <div className="mt-6 bg-orange-100 p-4 rounded-lg">
+                    <p className="font-bold text-orange-900 mb-2">📞 How to Report:</p>
+                    <ul className="text-gray-700 space-y-1">
+                      <li>• <strong>Emergency:</strong> Call 911</li>
+                      <li>• <strong>FBI Tip Line:</strong> 1-800-CALL-FBI</li>
+                      <li>• <strong>Sandy Hook Promise Tip Line:</strong> Text SAFE to 662-233</li>
+                      <li>• <strong>Local Law Enforcement:</strong> Contact your police department's non-emergency line</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Additional Resources */}
+              <div className="bg-gray-50 border-2 border-gray-300 rounded-xl p-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <ExternalLink size={24} />
+                  Official Resources & Sources
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <a href="https://www.dhs.gov/active-shooter-preparedness" target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-blue-900 hover:underline flex items-center gap-2">
+                    <ExternalLink size={16} />
+                    DHS Active Shooter Preparedness
+                  </a>
+                  <a href="https://www.fbi.gov/about/partnerships/office-of-partner-engagement/active-shooter-resources" target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-blue-900 hover:underline flex items-center gap-2">
+                    <ExternalLink size={16} />
+                    FBI Active Shooter Resources
+                  </a>
+                  <a href="https://www.sandyhookpromise.org/our-programs/know-the-signs-programs/" target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-blue-900 hover:underline flex items-center gap-2">
+                    <ExternalLink size={16} />
+                    Sandy Hook Promise - Know the Signs
+                  </a>
+                  <a href="https://www.ptsd.va.gov/" target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-blue-900 hover:underline flex items-center gap-2">
+                    <ExternalLink size={16} />
+                    National Center for PTSD
+                  </a>
+                  <a href="https://www.apa.org/topics/gun-violence-crime" target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-blue-900 hover:underline flex items-center gap-2">
+                    <ExternalLink size={16} />
+                    APA Gun Violence Resources
+                  </a>
+                  <a href="https://www.everytown.org/safety-plans/" target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-blue-900 hover:underline flex items-center gap-2">
+                    <ExternalLink size={16} />
+                    Everytown Safety Plans
+                  </a>
+                </div>
+              </div>
             </div>
           )}
         </div>
