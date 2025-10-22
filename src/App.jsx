@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, MessageCircle, Shield, MapPin, Phone, CheckCircle, Send, AlertCircle, ExternalLink, BookOpen, AlertTriangle, Eye, Run, Lock, ArrowRight, Heart } from 'lucide-react';
+import { Search, MessageCircle, Shield, MapPin, Phone, CheckCircle, Send, AlertCircle, ExternalLink, BookOpen, AlertTriangle, Eye, Navigation, Lock, ArrowRight, Heart } from 'lucide-react';
 
 const API_URL = 'https://community-support-backend.onrender.com/api';
 
@@ -1102,7 +1102,7 @@ export default function CommunitySupportHub() {
                   {/* RUN */}
                   <div className="bg-amber-50 border-2 border-amber-300 rounded-xl p-6 hover:shadow-lg transition-all">
                     <div className="bg-amber-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Run size={32} />
+                      <Navigation size={32} />
                     </div>
                     <h4 className="text-xl font-bold text-amber-900 mb-3 text-center">1. RUN</h4>
                     <ul className="space-y-2 text-gray-700">
