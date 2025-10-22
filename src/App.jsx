@@ -1091,14 +1091,14 @@ export default function CommunitySupportHub() {
                 <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg mb-6">
                   <h3 className="text-2xl font-bold text-red-900 mb-3 flex items-center gap-2">
                     <AlertTriangle size={28} />
-                    During an Active Shooting: RUN. HIDE. FIGHT.
+                    During an Active Shooting: RUN. HIDE.
                   </h3>
                   <p className="text-gray-700 mb-4">
                     <strong>Source:</strong> U.S. Department of Homeland Security & FBI Active Shooter Guidelines
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   {/* RUN */}
                   <div className="bg-amber-50 border-2 border-amber-300 rounded-xl p-6 hover:shadow-lg transition-all">
                     <div className="bg-amber-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -1155,36 +1155,6 @@ export default function CommunitySupportHub() {
                       <li className="flex items-start gap-2">
                         <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
                         <span>Turn off lights and remain silent</span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  {/* FIGHT */}
-                  <div className="bg-amber-50 border-2 border-amber-300 rounded-xl p-6 hover:shadow-lg transition-all">
-                    <div className="bg-amber-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Shield size={32} />
-                    </div>
-                    <h4 className="text-xl font-bold text-amber-900 mb-3 text-center">3. FIGHT</h4>
-                    <ul className="space-y-2 text-gray-700">
-                      <li className="flex items-start gap-2">
-                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
-                        <span><strong>Last resort only</strong> when life is in danger</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
-                        <span>Act with physical aggression</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
-                        <span>Improvise weapons (chairs, fire extinguishers)</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
-                        <span>Commit to your actions</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <ArrowRight size={16} className="mt-1 flex-shrink-0 text-amber-700" />
-                        <span>Work together with others if possible</span>
                       </li>
                     </ul>
                   </div>
@@ -1290,57 +1260,49 @@ export default function CommunitySupportHub() {
 
               {/* Warning Signs Section */}
               <div className="mb-10">
-                <div className="bg-orange-50 border-l-4 border-orange-500 p-6 rounded-lg mb-6">
-                  <h3 className="text-2xl font-bold text-orange-900 mb-3 flex items-center gap-2">
+                <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-lg mb-6">
+                  <h3 className="text-2xl font-bold text-blue-900 mb-3 flex items-center gap-2">
                     <Eye size={28} />
-                    Warning Signs: When to Report Concerns
+                    Supporting Someone in Distress
                   </h3>
                   <p className="text-gray-700 mb-2">
-                    <strong>Source:</strong> FBI Behavioral Analysis Unit & Sandy Hook Promise
+                    <strong>Source:</strong> Sandy Hook Promise & Mental Health First Aid
                   </p>
                   <p className="text-sm text-gray-600 italic">
-                    If you see something, say something. Many shootings have warning signs.
+                    Early support and intervention can help someone going through a difficult time.
                   </p>
                 </div>
 
-                <div className="bg-white border-2 border-orange-200 rounded-xl p-6">
+                <div className="bg-white border-2 border-blue-200 rounded-xl p-6">
                   <p className="text-gray-700 mb-4 font-semibold">
-                    Report to authorities (call 911 or local law enforcement) if someone:
+                    If you notice someone experiencing distress, consider reaching out or connecting them with support:
                   </p>
                   <ul className="space-y-3 text-gray-700">
                     <li className="flex items-start gap-3">
-                      <AlertTriangle size={18} className="mt-1 flex-shrink-0 text-orange-600" />
-                      <span><strong>Makes direct threats</strong> of violence against specific people or places</span>
+                      <Heart size={18} className="mt-1 flex-shrink-0 text-blue-600" />
+                      <span><strong>Showing signs of emotional distress</strong> - withdrawal from friends, family, or activities</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <AlertTriangle size={18} className="mt-1 flex-shrink-0 text-orange-600" />
-                      <span><strong>Shows fascination with violence</strong> or mass shootings</span>
+                      <Heart size={18} className="mt-1 flex-shrink-0 text-blue-600" />
+                      <span><strong>Experiencing major life changes</strong> - loss, trauma, or significant stress</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <AlertTriangle size={18} className="mt-1 flex-shrink-0 text-orange-600" />
-                      <span><strong>Exhibits concerning behavior</strong> - sudden isolation, aggression, paranoia</span>
+                      <Heart size={18} className="mt-1 flex-shrink-0 text-blue-600" />
+                      <span><strong>Talking about feeling hopeless</strong> or expressing despair</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <AlertTriangle size={18} className="mt-1 flex-shrink-0 text-orange-600" />
-                      <span><strong>Posts threats or violent content</strong> on social media</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <AlertTriangle size={18} className="mt-1 flex-shrink-0 text-orange-600" />
-                      <span><strong>Has acquired weapons</strong> and talks about using them</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <AlertTriangle size={18} className="mt-1 flex-shrink-0 text-orange-600" />
-                      <span><strong>Expresses feelings of persecution</strong> or revenge fantasies</span>
+                      <Heart size={18} className="mt-1 flex-shrink-0 text-blue-600" />
+                      <span><strong>Needing someone to talk to</strong> - everyone benefits from support</span>
                     </li>
                   </ul>
 
-                  <div className="mt-6 bg-orange-100 p-4 rounded-lg">
-                    <p className="font-bold text-orange-900 mb-2">📞 How to Report:</p>
+                  <div className="mt-6 bg-blue-100 p-4 rounded-lg">
+                    <p className="font-bold text-blue-900 mb-2">💬 How to Help:</p>
                     <ul className="text-gray-700 space-y-1">
-                      <li>• <strong>Emergency:</strong> Call 911</li>
-                      <li>• <strong>FBI Tip Line:</strong> 1-800-CALL-FBI</li>
-                      <li>• <strong>Sandy Hook Promise Tip Line:</strong> Text SAFE to 662-233</li>
-                      <li>• <strong>Local Law Enforcement:</strong> Contact your police department's non-emergency line</li>
+                      <li>• <strong>Listen with empathy:</strong> Sometimes people just need to be heard</li>
+                      <li>• <strong>Crisis Text Line:</strong> Text HOME to 741741</li>
+                      <li>• <strong>National Crisis Line:</strong> Call or text 988</li>
+                      <li>• <strong>Connect them to resources:</strong> Share mental health and support services</li>
                     </ul>
                   </div>
                 </div>
